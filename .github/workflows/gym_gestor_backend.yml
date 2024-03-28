@@ -8,4 +8,8 @@ jobs:
         run: echo "Hello from actions"
       - name: by3-printer
         run: echo "Goodbye from actions"
+    # for multi-line shell commands use
+      # run: |
+        # echo "something"
+        # echo "another thing"
         
