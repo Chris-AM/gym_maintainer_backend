@@ -1,0 +1,11 @@
+name: gym_gestor_backend
+on: workflow_dispatch
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: hell0-printer
+        run: echo "Hello from actions"
+      - name: by3-printer
+        run: echo "Goodbye from actions"
+        
