@@ -6,6 +6,8 @@ services:
     ports:
       - 27017:27017
     environment:
-        MONGODB_DATABASE: gym_mainainer_backend
+        MONGODB_DATABASE: ${DB_NAME}
+        MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+        MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./mongo:/data/db
