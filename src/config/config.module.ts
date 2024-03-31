@@ -5,6 +5,7 @@ import { BcryptService } from './bcrypt/bcrypt.service';
 import { DatabaseService } from './database/database.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongooseODMConfig } from './database/database.helper';
+import { JwtService } from './jwt/jwt.service';
 
 const configService = new ConfigService();
 const loggerService = new LoggerService(configService);
@@ -17,7 +18,7 @@ const service: DatabaseService = new DatabaseService(
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     MongooseModule.forRoot(getMongooseODMConfig(service).uri),
   ],
-  providers: [LoggerService, BcryptService, DatabaseService],
-  exports: [LoggerService, BcryptService, DatabaseService],
+  providers: [LoggerService, BcryptService, DatabaseService, JwtService],
+  exports: [LoggerService, BcryptService, DatabaseService, JwtService],
 })
 export class EnvironmentConfigModule {}
