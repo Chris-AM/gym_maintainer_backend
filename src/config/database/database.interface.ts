@@ -1,9 +1,7 @@
-export interface DatabaseInterface {
+export interface IDatabaseInterface {
   getDatabaseHost(): string;
   getDatabasePort(): number;
   getDatabaseUsername(): string;
   getDatabasePassword(): string;
   getDatabaseName(): string;
-  getDatabaseSynchronize(): boolean;
-  getDatabaseType(): string;
 }
