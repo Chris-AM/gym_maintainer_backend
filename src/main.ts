@@ -15,6 +15,8 @@ async function gymGestor() {
   const loggerInterceptor = new LoggerInterceptor(logger);
   const responseInterceptor = new ResponseInterceptor();
   const httpException = new HttpExceptionFilter(logger);
+  // using process insted of configService to avoid circular dependency
+  const port = process.env.APP_PORT;
 
   app.enableCors();
   app.enableVersioning({
@@ -32,6 +34,7 @@ async function gymGestor() {
   app.useGlobalInterceptors(loggerInterceptor);
   app.useGlobalInterceptors(responseInterceptor);
   app.useGlobalFilters(httpException);
-  await app.listen(3000);
+  await app.listen(port);
+  logger.log('🚀 APP', `Server running on port ${port}`);
 }
 gymGestor();
