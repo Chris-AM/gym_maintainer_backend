@@ -12,39 +12,47 @@ export class DatabaseService implements IDatabaseInterface {
   ) {}
 
   getDatabaseHost(): string {
-    const host = this.configService.get<string>('DB_HOST');
-    console.log('host', host);
-    if (host === undefined || host === null || host === '') {
-      throw new Error('Database host not found');
-    }
-    return host;
+    const host: string = this.configService.get<string>('DB_HOST');
+    const petitionResponse = this.varValidation(host)
+      ? (this.logger.error('[DB SERVICE]', 'Database host not found'), null)
+      : (this.logger.debug(`Connected At Host => ${host}`), host);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
   }
-  getDatabasePort(): number {
+  getDatabasePort(): string {
     const port = this.configService.get<number>('DB_PORT');
-    if (port === undefined || port === null || port === 0) {
-      throw new Error('Database port not found');
-    }
-    return port;
+    const petitionResponse = this.varValidation(port)
+      ? (this.logger.error('[DB SERVICE]', 'Database port not found'), null)
+      : (this.logger.debug(`Connected At Port => ${port}`), port);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
   }
   getDatabaseUsername(): string {
     const username = this.configService.get<string>('DB_USERNAME');
-    if (username === undefined || username === null || username === '') {
-      throw new Error('Database username not found');
-    }
-    return username;
+    const petitionResponse = this.varValidation(username)
+      ? (this.logger.error('[DB SERVICE]', 'Database username not found'), null)
+      : (this.logger.debug(`Connected With Username => ${username}`), username);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
   }
   getDatabasePassword(): string {
     const password = this.configService.get<string>('DB_PASSWORD');
-    if (password === undefined || password === null || password === '') {
-      throw new Error('Database password not found');
-    }
-    return password;
+    const petitionResponse = this.varValidation(password)
+      ? (this.logger.error('[DB SERVICE]', 'Database password not found'), null)
+      : (this.logger.debug(`Connected With Password => ${password}`), password);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
   }
   getDatabaseName(): string {
     const database = this.configService.get<string>('DB_NAME');
-    if (database === undefined || database === null || database === '') {
-      throw new Error('Database name not found');
-    }
-    return database;
+    const petitionResponse = this.varValidation(database)
+      ? (this.logger.error('[DB SERVICE]', 'Database name not found'), null)
+      : (this.logger.debug(`Connected With Database => ${database}`), database);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
+  }
+
+  private varValidation(variable: string | number): boolean {
+    return variable === undefined || variable === null || variable === '';
   }
 }

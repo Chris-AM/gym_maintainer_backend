@@ -1,6 +1,6 @@
 export interface IDatabaseInterface {
   getDatabaseHost(): string;
-  getDatabasePort(): number;
+  getDatabasePort(): string;
   getDatabaseUsername(): string;
   getDatabasePassword(): string;
   getDatabaseName(): string;
