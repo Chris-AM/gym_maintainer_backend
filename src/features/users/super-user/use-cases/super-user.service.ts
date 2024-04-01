@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSuperUserDto } from '../dto/create-super-user.dto';
-import { UpdateSuperUserDto } from '../dto/update-super-user.dto';
+import { CreateSuperUserDto } from '../domain/dto/create-super-user.dto';
+import { UpdateSuperUserDto } from '../domain/dto/update-super-user.dto';
 
 @Injectable()
 export class SuperUserService {

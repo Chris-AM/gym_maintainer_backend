@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SuperUserService } from './super-user.service';
-import { CreateSuperUserDto } from '../dto/create-super-user.dto';
-import { UpdateSuperUserDto } from '../dto/update-super-user.dto';
+import { CreateSuperUserDto } from '../domain/dto/create-super-user.dto';
+import { UpdateSuperUserDto } from '../domain/dto/update-super-user.dto';
 
 @Controller('super-user')
 export class SuperUserController {
