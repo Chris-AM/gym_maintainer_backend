@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { BaseUserEntity } from '../../../base-user/base-user.entity';
+import { BaseUserEntity } from '../../domain/base-user.entity';
 
 export type SuperUserDocument = SuperUserEntity & Document;
 @Schema({
