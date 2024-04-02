@@ -1,5 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { BodyMuscleEntity } from 'src/features/body-muscles/domain/body-muscle.entity';
+import { MachineEntity } from 'src/features/machine/entities/machine.entity';
+import { VideoEntity } from 'src/features/video/entities/video.entity';
 import { v4 } from 'uuid';
 
 export type ExcerciseDocument = ExcerciseEntity & Document;
@@ -32,13 +35,13 @@ export class ExcerciseEntity {
   @Prop({ required: true })
   currentValue: number;
   @Prop({ required: true })
-  video: string;
-  @Prop({ required: true })
-  machine: string;
-  @Prop({ required: true })
-  focus: string;
-  @Prop({ required: true })
-  secuencies: string;
+  secuencies: number;
+  @Prop({ required: true, type: VideoEntity })
+  video: VideoEntity[];
+  @Prop({ required: true, type: MachineEntity })
+  machine: MachineEntity[];
+  @Prop({ required: true, type: BodyMuscleEntity })
+  focus: BodyMuscleEntity[];
 }
 
 const ExcerciseSchema = SchemaFactory.createForClass(ExcerciseEntity);
