@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { v4 } from 'uuid';
 
-export type ExcerciseDocument = Excercise & Document;
+export type ExcerciseDocument = ExcerciseEntity & Document;
 
 @Schema({
   timestamps: true,
@@ -16,9 +16,9 @@ export type ExcerciseDocument = Excercise & Document;
     },
   },
 })
-export class Excercise {
+export class ExcerciseEntity {
   @Prop({ unique: true, default: v4, type: Types.ObjectId })
-  excerciseId: Types.ObjectId;
+  excerciseId: string;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
@@ -41,7 +41,7 @@ export class Excercise {
   secuencies: string;
 }
 
-const ExcerciseSchema = SchemaFactory.createForClass(Excercise);
+const ExcerciseSchema = SchemaFactory.createForClass(ExcerciseEntity);
 ExcerciseSchema.virtual('id').get(function (this: ExcerciseDocument) {
   return this._id;
 });

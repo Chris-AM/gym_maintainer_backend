@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateExcerciseDto } from './dto/create-excercise.dto';
-import { UpdateExcerciseDto } from './dto/update-excercise.dto';
+import { CreateExcerciseDto } from '../domain/dto/create-excercise.dto';
+import { UpdateExcerciseDto } from '../domain/dto/update-excercise.dto';
 
 @Injectable()
 export class ExcerciseService {
