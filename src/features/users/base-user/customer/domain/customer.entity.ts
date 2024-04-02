@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import { v4 } from 'uuid';
 import { BaseUserEntity } from '../../domain/base-user.entity';
 import { CoachEntity } from '../../worker-user/coach/domain/coach.entity';
-import { PlanEntity } from 'src/features/plan/entities/plan.entity';
+import { PlanEntity } from 'src/features/plan/domain/plan.entity';
 import { ServiceEntity } from 'src/features/service/entities/service.entity';
 
 export type CustomerDocument = CustomerEntity & Document;
