@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MachineService } from './machine.service';
-import { MachineController } from './machine.controller';
+import { MachineService } from './use-case/machine.service';
+import { MachineController } from './use-case/machine.controller';
 
 @Module({
   controllers: [MachineController],

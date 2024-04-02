@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MachineService } from './machine.service';
-import { CreateMachineDto } from './dto/create-machine.dto';
-import { UpdateMachineDto } from './dto/update-machine.dto';
+import { CreateMachineDto } from '../domain/dto/create-machine.dto';
+import { UpdateMachineDto } from '../domain/dto/update-machine.dto';
 
 @Controller('machine')
 export class MachineController {
