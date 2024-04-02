@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { BodyMuscleEntity } from 'src/features/body-muscles/domain/body-muscle.entity';
-import { MachineEntity } from 'src/features/machine/entities/machine.entity';
+import { MachineEntity } from 'src/features/machine/domain/machine.entity';
 import { VideoEntity } from 'src/features/video/entities/video.entity';
 import { v4 } from 'uuid';
 
