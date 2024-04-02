@@ -3,20 +3,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerService } from './logger/logger.service';
 import { BcryptService } from './bcrypt/bcrypt.service';
 import { DatabaseService } from './database/database.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { getMongooseODMConfig } from './database/database.helper';
 import { JwtService } from './jwt/jwt.service';
-
-const configService = new ConfigService();
-const loggerService = new LoggerService(configService);
-const service: DatabaseService = new DatabaseService(
-  configService,
-  loggerService,
-);
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { getTypeOrmModuleOptions } from './database/database.helper';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
-    MongooseModule.forRoot(getMongooseODMConfig(service).uri),
+    TypeOrmModule.forRootAsync({
+      imports: [EnvironmentConfigModule],
+      inject: [DatabaseService],
+      useFactory: (configService: DatabaseService) =>
+        getTypeOrmModuleOptions(configService),
+    })
   ],
   providers: [LoggerService, BcryptService, DatabaseService, JwtService],
   exports: [LoggerService, BcryptService, DatabaseService, JwtService],
