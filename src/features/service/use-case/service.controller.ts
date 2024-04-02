@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ServiceService } from './service.service';
-import { CreateServiceDto } from './dto/create-service.dto';
-import { UpdateServiceDto } from './dto/update-service.dto';
+import { CreateServiceDto } from '../domain/dto/create-service.dto';
+import { UpdateServiceDto } from '../domain/dto/update-service.dto';
 
 @Controller('service')
 export class ServiceController {
