@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { v4 } from 'uuid';
 import { BaseUserEntity } from '../../domain/base-user.entity';
 import { CoachEntity } from '../../worker-user/coach/domain/coach.entity';
 import { PlanEntity } from 'src/features/plan/entities/plan.entity';
 import { ServiceEntity } from 'src/features/service/entities/service.entity';
-import { v4 } from 'uuid';
 
 export type CustomerDocument = CustomerEntity & Document;
 

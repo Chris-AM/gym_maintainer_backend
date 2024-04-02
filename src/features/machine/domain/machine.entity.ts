@@ -17,19 +17,18 @@ export type MachineDocument = MachineEntity & Document;
   },
 })
 export class MachineEntity {
-    @Prop({ unique: true, type: v4 })
-    machineId: string;
-    @Prop({ required: true })
-    name: string;
-    @Prop({ required: true })
-    type: string;
-    @Prop({ required: true })
-    brand: string;
-    @Prop({ required: true })
-    description: string;
-    @Prop({ required: true })
-    warnings: string;
-    
+  @Prop({ unique: true, type: v4 })
+  machineId: string;
+  @Prop({ required: true })
+  name: string;
+  @Prop({ required: true })
+  type: string;
+  @Prop({ required: true })
+  brand: string;
+  @Prop({ required: true })
+  description: string;
+  @Prop({ required: true })
+  warnings: string;
 }
 
 const MachineSchema = SchemaFactory.createForClass(MachineEntity);
