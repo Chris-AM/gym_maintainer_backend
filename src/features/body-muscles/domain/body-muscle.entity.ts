@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { ExcerciseEntity } from 'src/features/excercise/entities/excercise.entity';
+import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
 import { v4 } from 'uuid';
 
 export type BodyMuscleDocument = BodyMuscleEntity & Document;
