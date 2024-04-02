@@ -24,7 +24,5 @@ import { BaseUserModule } from './features/users/base-user/base-user.module';
     ServiceModule,
     BaseUserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
