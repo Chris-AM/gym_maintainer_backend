@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { v4 } from 'uuid';
 
 export type ExcerciseDocument = Excercise & Document;
 
@@ -16,8 +17,8 @@ export type ExcerciseDocument = Excercise & Document;
   },
 })
 export class Excercise {
-  @Prop({ required: true, default: Types.ObjectId, type: Types.ObjectId })
-  nonce: Types.ObjectId;
+  @Prop({ unique: true, default: v4, type: Types.ObjectId })
+  excerciseId: Types.ObjectId;
   @Prop({ required: true })
   name: string;
   @Prop({ required: true })
