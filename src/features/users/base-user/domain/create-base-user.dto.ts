@@ -1,39 +1,39 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Types } from 'mongoose';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateBaseUserDTO {
   @ApiProperty({
-    type: Types.ObjectId,
+    required: true,
+    type: String,
+    description: 'Nombre completo del usuario',
   })
-  nonce: Types.ObjectId;
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string;
   @ApiProperty({
     required: true,
     type: String,
   })
-  name: string;
+  @IsEmail()
+  @IsNotEmpty()
+  readonly email: string;
   @ApiProperty({
     required: true,
     type: String,
   })
-  email: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly password: string;
   @ApiProperty({
     required: true,
     type: String,
   })
-  password: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly phoneNumber: string;
   @ApiProperty({
     required: true,
     type: String,
   })
-  phoneNumber: string;
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  avatar: string;
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  type: string;
+  readonly type: string;
 }

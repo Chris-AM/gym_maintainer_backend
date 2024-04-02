@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { BaseUserEntity } from '../../domain/base-user.entity';
+import { v4 } from 'uuid';
 
 export type SuperUserDocument = SuperUserEntity & Document;
 @Schema({
@@ -16,6 +17,15 @@ export type SuperUserDocument = SuperUserEntity & Document;
   },
 })
 export class SuperUserEntity extends BaseUserEntity {
+  @Prop({ required: true, type: String })
+  dni: string;
+  @Prop({ unique: true, type: String, default: v4 })
+  gymId: string;
+  @Prop({ required: true, type: String })
+  gymName: string;
+  @Prop({ required: true, type: String })
+  direction: string;
+  
   constructor() {
     super();
     this.type = 'super';

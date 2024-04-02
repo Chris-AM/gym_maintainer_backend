@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CoachService } from './coach.service';
-import { CreateCoachDto } from './dto/create-coach.dto';
-import { UpdateCoachDto } from './dto/update-coach.dto';
+import { CreateCoachDto } from '../domain/dto/create-coach.dto';
+import { UpdateCoachDto } from '../domain/dto/update-coach.dto';
 
 @Controller('coach')
 export class CoachController {
