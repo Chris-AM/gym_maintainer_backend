@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { BodyMusclesService } from './body-muscles.service';
-import { BodyMusclesController } from './body-muscles.controller';
+import { BodyMusclesService } from './use-case/body-muscles.service';
+import { BodyMusclesController } from './use-case/body-muscles.controller';
 
 @Module({
   controllers: [BodyMusclesController],

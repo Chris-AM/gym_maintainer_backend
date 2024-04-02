@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BodyMusclesService } from './body-muscles.service';
-import { CreateBodyMuscleDto } from './dto/create-body-muscle.dto';
-import { UpdateBodyMuscleDto } from './dto/update-body-muscle.dto';
+import { CreateBodyMuscleDto } from '../domain/dto/create-body-muscle.dto';
+import { UpdateBodyMuscleDto } from '../domain/dto/update-body-muscle.dto';
 
 @Controller('body-muscles')
 export class BodyMusclesController {
@@ -23,7 +31,10 @@ export class BodyMusclesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBodyMuscleDto: UpdateBodyMuscleDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBodyMuscleDto: UpdateBodyMuscleDto,
+  ) {
     return this.bodyMusclesService.update(+id, updateBodyMuscleDto);
   }
 

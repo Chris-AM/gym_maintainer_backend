@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBodyMuscleDto } from './dto/create-body-muscle.dto';
-import { UpdateBodyMuscleDto } from './dto/update-body-muscle.dto';
+import { CreateBodyMuscleDto } from '../domain/dto/create-body-muscle.dto';
+import { UpdateBodyMuscleDto } from '../domain/dto/update-body-muscle.dto';
 
 @Injectable()
 export class BodyMusclesService {
