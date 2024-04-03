@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as mongoose from 'mongoose';
 import { IDatabaseInterface } from './database.interface';
 import { ConfigService } from '@nestjs/config';
 import { LoggerService } from '../logger/logger.service';
@@ -10,6 +9,15 @@ export class DatabaseService implements IDatabaseInterface {
     private readonly configService: ConfigService,
     private readonly logger: LoggerService,
   ) {}
+
+  getDatabaseType(): string {
+    const type: string = this.configService.get<string>('DB_TYPE');
+    const petitionResponse = this.varValidation(type)
+      ? (this.logger.error('[DB SERVICE]', 'Database type not found'), null)
+      : (this.logger.debug(`Connected With Database Type => ${type}`), type);
+    const encoded = encodeURIComponent(petitionResponse);
+    return encoded;
+  }
 
   getDatabaseHost(): string {
     const host: string = this.configService.get<string>('DB_HOST');

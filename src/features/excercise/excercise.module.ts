@@ -1,19 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ExcerciseService } from './use-cases/excercise.service';
 import { ExcerciseController } from './use-cases/excercise.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ExcerciseEntity, ExcerciseSchema } from './domain/excercise.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ExcerciseEntity } from './domain/excercise.entity';
 
 @Module({
-  imports: [
-    MongooseModule.forFeatureAsync([
-      {
-        name: ExcerciseEntity.name,
-        useFactory: () =>
-          ExcerciseSchema.plugin(require('mongoose-autopopulate')),
-      },
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([ExcerciseEntity])],
   controllers: [ExcerciseController],
   providers: [ExcerciseService],
 })

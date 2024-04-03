@@ -1,39 +1,23 @@
-import { Document } from 'mongoose';
 import { WorkerUserEntity } from '../../domain/worker-user.entity';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { CustomerEntity } from '../../../customer/domain/customer.entity';
-import { v4 } from 'uuid';
+import { ServiceEntity } from 'src/features/service/domain/service.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-export type CoachDocument = CoachEntity & Document;
-@Schema({
-  timestamps: true,
-  collection: 'coachUser',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('coach-user')
 export class CoachEntity extends WorkerUserEntity {
-  @Prop({ unique: true, type: String, default: v4 })
-  coachId: string;
-  @Prop({ required: true, type: String })
+  @PrimaryGeneratedColumn('increment')
+  coachId: number;
+  @Column('text')
   degree: string;
-  @Prop({ required: false, type: CustomerEntity, default: [] })
+  @OneToMany(() => CustomerEntity, (customer) => customer.coach)
   students: CustomerEntity[];
-
+  @OneToMany(() => ServiceEntity, (service) => service.chief, {
+    eager: true,
+    cascade: true,
+  })
+  servicesGiven: ServiceEntity[];
   constructor() {
     super();
     this.type = 'coach';
   }
 }
-
-const CoachSchema = SchemaFactory.createForClass(CoachEntity);
-CoachSchema.virtual('id').get(function (this: CoachDocument) {
-  return this._id;
-});
-
-export { CoachSchema };
