@@ -32,7 +32,9 @@ export class ExcerciseEntity {
   secuencies: number;
   @OneToMany(() => VideoEntity, (video) => video.excercise)
   video: VideoEntity[];
-
+  @ManyToMany(() => MachineEntity, (machine) => machine.focus, {
+    eager: true,
+  })
   machine: MachineEntity[];
   @ManyToMany(
     () => BodyMuscleEntity,
