@@ -1,5 +1,12 @@
+import { CustomerEntity } from 'src/features/users/base-user/customer/domain/customer.entity';
 import { CoachEntity } from 'src/features/users/base-user/worker-user/coach/domain/coach.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('service')
 export class ServiceEntity {
@@ -19,4 +26,6 @@ export class ServiceEntity {
   daysAWeek: number;
   @ManyToOne(() => CoachEntity, (chief) => chief.servicesGiven)
   chief: CoachEntity;
+  @ManyToMany(() => CustomerEntity, (customer) => customer.servicesEnrolled)
+  studentsEnrolled: CustomerEntity[];
 }
