@@ -1,43 +1,18 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
-import { v4 } from 'uuid';
 
 export type BodyMuscleDocument = BodyMuscleEntity & Document;
 
-@Schema({
-  timestamps: true,
-  collection: 'bodyMuscles',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('body-muscle')
 export class BodyMuscleEntity {
-  @Prop({ unique: true, type: v4 })
+  @PrimaryGeneratedColumn('uuid')
   muscleId: string;
-  @Prop({ required: true })
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   description: string;
-  @Prop({ required: false, default: '' })
+  @Column('text')
   icon: string;
-  @Prop({
-    required: false,
-    type: ExcerciseEntity,
-    ref: 'Excercise',
-    default: [],
-  })
+
   bestExcercises: ExcerciseEntity[];
 }
-
-const BodyMuscleSchema = SchemaFactory.createForClass(BodyMuscleEntity);
-BodyMuscleSchema.virtual('id').get(function (this: BodyMuscleDocument) {
-  return this._id;
-});
-
-export { BodyMuscleSchema };
