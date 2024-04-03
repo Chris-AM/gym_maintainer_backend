@@ -1,49 +1,21 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
-import { v4 } from 'uuid';
-
-export type PlanDocument = PlanEntity & Document;
-
-@Schema({
-  timestamps: true,
-  collection: 'plan',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id_;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+@Entity('plan')
 export class PlanEntity {
-  @Prop({ unique: true, type: String, default: v4 })
+  @PrimaryGeneratedColumn('uuid')
   planId: string;
-  @Prop({ required: true })
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   description: string;
-  @Prop({ required: true })
+  @Column('int')
   price: number;
-  @Prop({ required: true })
+  @Column('int')
   duration: number;
-  @Prop({ required: true, type: Boolean, default: true })
+  @Column('boolean')
   isActive: boolean;
-  @Prop({ required: true, type: Number })
+  @Column('int')
   daysAWeek: number;
-  @Prop({
-    required: true,
-    type: ExcerciseEntity,
-    ref: 'Excercise',
-    default: [],
-  })
+  @OneToMany(() => ExcerciseEntity, (excercise) => excercise.plan)
   excercises: ExcerciseEntity[];
 }
-
-const PlanSchema = SchemaFactory.createForClass(PlanEntity);
-PlanSchema.virtual('id').get(function (this: PlanDocument) {
-  return this._id;
-});
-
-export { PlanSchema };
