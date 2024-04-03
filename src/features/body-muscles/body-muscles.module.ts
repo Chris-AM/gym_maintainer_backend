@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BodyMuscleEntity } from './domain/body-muscle.entity';
 import { BodyMuscleIconEntity } from './domain/body-muscle.icon';
 @Module({
-  // imports: [TypeOrmModule.forFeature([BodyMuscleEntity, BodyMuscleIconEntity])],
+  imports: [TypeOrmModule.forFeature([BodyMuscleEntity, BodyMuscleIconEntity])],
   controllers: [BodyMusclesController],
   providers: [BodyMusclesService],
 })

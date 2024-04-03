@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import { BodyMuscleIconEntity } from './body-muscle.icon';
 
 export type BodyMuscleDocument = BodyMuscleEntity & Document;
 
@@ -11,8 +19,9 @@ export class BodyMuscleEntity {
   name: string;
   @Column('text')
   description: string;
-  @Column('text')
-  icon: string;
-
+  @ManyToMany(() => ExcerciseEntity, (excercise) => excercise.focus, {})
+  @JoinTable()
   bestExcercises: ExcerciseEntity[];
+  @OneToOne(() => BodyMuscleIconEntity, (icon) => icon.bodyMuscle)
+  icon: BodyMuscleIconEntity;
 }
