@@ -1,51 +1,46 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
 import { BodyMuscleEntity } from 'src/features/body-muscles/domain/body-muscle.entity';
 import { MachineEntity } from 'src/features/machine/domain/machine.entity';
 import { VideoEntity } from 'src/features/video/domain/video.entity';
-import { v4 } from 'uuid';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export type ExcerciseDocument = ExcerciseEntity & Document;
 
-@Schema({
-  timestamps: true,
-  collection: 'excercise',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('excercise')
 export class ExcerciseEntity {
-  @Prop({ unique: true, default: v4, type: Types.ObjectId })
+  @PrimaryGeneratedColumn('uuid')
   excerciseId: string;
-  @Prop({ required: true })
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   description: string;
-  @Prop({ required: true })
+  @Column('int')
   duration: number;
-  @Prop({ required: true })
+  @Column('int')
   calories: number;
-  @Prop({ required: true })
+  @Column('int')
   initValue: number;
-  @Prop({ required: true })
+  @Column('int')
   currentValue: number;
-  @Prop({ required: true })
+  @Column('int')
   secuencies: number;
-  @Prop({ required: true, type: VideoEntity })
+  @OneToMany(() => VideoEntity, (video) => video.excercise)
   video: VideoEntity[];
-  @Prop({ required: true, type: MachineEntity })
+
   machine: MachineEntity[];
-  @Prop({ required: true, type: BodyMuscleEntity })
+  @ManyToMany(
+    () => BodyMuscleEntity,
+    (bodyMuscle) => bodyMuscle.bestExcercises,
+    {
+      eager: true,
+    },
+  )
+  @JoinTable()
   focus: BodyMuscleEntity[];
 }
-
-const ExcerciseSchema = SchemaFactory.createForClass(ExcerciseEntity);
-ExcerciseSchema.virtual('id').get(function (this: ExcerciseDocument) {
-  return this._id;
-});
-export { ExcerciseSchema };
