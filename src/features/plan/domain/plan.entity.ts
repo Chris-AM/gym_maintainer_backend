@@ -1,5 +1,13 @@
 import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CustomerEntity } from 'src/features/users/base-user/customer/domain/customer.entity';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 @Entity('plan')
 export class PlanEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -18,4 +26,6 @@ export class PlanEntity {
   daysAWeek: number;
   @OneToMany(() => ExcerciseEntity, (excercise) => excercise.plan)
   excercises: ExcerciseEntity[];
+  @ManyToOne(() => CustomerEntity, (customers) => customers.plan)
+  customers: CustomerEntity[];
 }
