@@ -1,18 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CoachEntity, CoachSchema } from './domain/coach.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoachService } from './use-case/coach.service';
 import { CoachController } from './use-case/coach.controller';
+import { CoachEntity } from './domain/coach.entity';
 
 @Module({
-  imports: [
-    MongooseModule.forFeatureAsync([
-      {
-        name: CoachEntity.name,
-        useFactory: () => CoachSchema.plugin(require('mongoose-autopopulate')),
-      },
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([CoachEntity])],
   controllers: [CoachController],
   providers: [CoachService],
 })
