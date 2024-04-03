@@ -1,22 +1,11 @@
 import { Module } from '@nestjs/common';
 import { BodyMusclesService } from './use-case/body-muscles.service';
 import { BodyMusclesController } from './use-case/body-muscles.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import {
-  BodyMuscleEntity,
-  BodyMuscleSchema,
-} from './domain/body-muscle.entity';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BodyMuscleEntity } from './domain/body-muscle.entity';
+import { BodyMuscleIconEntity } from './domain/body-muscle.icon';
 @Module({
-  imports: [
-    MongooseModule.forFeatureAsync([
-      {
-        name: BodyMuscleEntity.name,
-        useFactory: () =>
-          BodyMuscleSchema.plugin(require('mongoose-autopopulate')),
-      },
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([BodyMuscleEntity, BodyMuscleIconEntity])],
   controllers: [BodyMusclesController],
   providers: [BodyMusclesService],
 })

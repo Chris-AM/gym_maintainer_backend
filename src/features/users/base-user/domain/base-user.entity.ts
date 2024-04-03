@@ -1,23 +1,20 @@
-import { Prop, Schema } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
-export type BaseUserDocument = BaseUserEntity & Document;
-@Schema()
 export class BaseUserEntity {
-  @Prop({ type: Types.ObjectId, unique: true, default: Types.ObjectId })
-  nonce: Types.ObjectId;
-  @Prop({ required: true })
+  @PrimaryGeneratedColumn('uuid')
+  userID: string;
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   email: string;
-  @Prop({ required: true })
+  @Column('text')
   password: string;
-  @Prop({ required: true })
+  @Column('text')
   phoneNumber: string;
-  @Prop({ required: false, default: ''})
+  @Column('text')
   avatar: string;
-  @Prop({ required: true })
+  @Column('text')
   type: string;
-  @Prop({ required: false, default: true })
-  active: boolean;
+  @Column('boolean')
+  isActive: boolean;
 }

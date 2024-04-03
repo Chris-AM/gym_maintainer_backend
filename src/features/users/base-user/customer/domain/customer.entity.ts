@@ -1,43 +1,30 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { v4 } from 'uuid';
+import { Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseUserEntity } from '../../domain/base-user.entity';
 import { CoachEntity } from '../../worker-user/coach/domain/coach.entity';
 import { PlanEntity } from 'src/features/plan/domain/plan.entity';
 import { ServiceEntity } from 'src/features/service/domain/service.entity';
 
-export type CustomerDocument = CustomerEntity & Document;
-
-@Schema({
-  timestamps: true,
-  collection: 'customerUser',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id_;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('customer-user')
 export class CustomerEntity extends BaseUserEntity {
-  @Prop({ unique: true, type: v4 })
-  customerId: string;
-  @Prop({ required: true, type: CoachEntity, ref: 'coachUser' })
-  coach: Types.ObjectId;
-  @Prop({ required: false, type: PlanEntity, ref: 'Plan', default: [] })
-  plan: PlanEntity[];
-  @Prop({ required: false, type: ServiceEntity, ref: 'Service', default: [] })
-  service: Types.ObjectId;
+  @PrimaryGeneratedColumn('increment')
+  customerId: number;
+  @ManyToOne(() => CoachEntity, (coach) => coach.students, {
+    eager: true,
+    cascade: true,
+  })
+  coach: CoachEntity;
+  @ManyToOne(() => PlanEntity, (plan) => plan.customers, {
+    eager: true,
+    cascade: true,
+  })
+  plan: PlanEntity;
+  @ManyToMany(() => ServiceEntity, (service) => service.studentsEnrolled, {
+    eager: true,
+    cascade: true,
+  })
+  servicesEnrolled: ServiceEntity[];
   constructor() {
     super();
     this.type = 'customer';
   }
 }
-
-const CustomerSchema = SchemaFactory.createForClass(CustomerEntity);
-CustomerSchema.virtual('id').get(function (this: CustomerDocument) {
-  return this._id;
-});
-
-export { CustomerSchema };

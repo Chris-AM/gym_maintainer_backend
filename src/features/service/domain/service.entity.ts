@@ -1,36 +1,33 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { CustomerEntity } from 'src/features/users/base-user/customer/domain/customer.entity';
 import { CoachEntity } from 'src/features/users/base-user/worker-user/coach/domain/coach.entity';
-import { v4 } from 'uuid';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-export type ServiceDocument = ServiceEntity & Document;
-
-@Schema({
-  timestamps: true,
-  collection: 'service',
-})
+@Entity('service')
 export class ServiceEntity {
-  @Prop({ unique: true, type: String, default: v4 })
+  @PrimaryGeneratedColumn('uuid')
   serviceId: string;
-  @Prop({ required: true })
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   description: string;
-  @Prop({ required: true })
+  @Column('int')
   price: number;
-  @Prop({ required: true })
+  @Column('int')
   duration: number;
-  @Prop({ required: true, type: Boolean, default: true })
+  @Column('boolean')
   isActive: boolean;
-  @Prop({ required: true, type: Number })
+  @Column('int')
   daysAWeek: number;
-  @Prop({ required: true, type: CoachEntity, ref: 'coachUser' })
+  @ManyToOne(() => CoachEntity, (chief) => chief.servicesGiven)
   chief: CoachEntity;
+  @ManyToMany(() => CustomerEntity, (customer) => customer.servicesEnrolled)
+  @JoinTable()
+  studentsEnrolled: CustomerEntity[];
 }
-
-const ServiceSchema = SchemaFactory.createForClass(ServiceEntity);
-ServiceSchema.virtual('id').get(function (this: ServiceDocument) {
-  return this._id;
-});
-
-export { ServiceSchema };

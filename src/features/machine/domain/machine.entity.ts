@@ -1,39 +1,27 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { v4 } from 'uuid';
+import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-export type MachineDocument = MachineEntity & Document;
-
-@Schema({
-  timestamps: true,
-  collection: 'machine',
-  toJSON: {
-    virtuals: true,
-    transform: function (doc: any, ret: any) {
-      delete ret._id_;
-      delete ret.__v;
-      return ret;
-    },
-  },
-})
+@Entity('machine')
 export class MachineEntity {
-  @Prop({ unique: true, type: v4 })
+  @PrimaryGeneratedColumn('uuid')
   machineId: string;
-  @Prop({ required: true })
+  @Column('text')
   name: string;
-  @Prop({ required: true })
+  @Column('text')
   type: string;
-  @Prop({ required: true })
+  @Column('text')
   brand: string;
-  @Prop({ required: true })
+  @Column('text')
   description: string;
-  @Prop({ required: true })
+  @Column('text')
   warnings: string;
+  @ManyToMany(() => ExcerciseEntity, (excercise) => excercise.machine)
+  @JoinTable()
+  focus: ExcerciseEntity[];
 }
-
-const MachineSchema = SchemaFactory.createForClass(MachineEntity);
-MachineSchema.virtual('id').get(function (this: MachineDocument) {
-  return this._id;
-});
-
-export { MachineSchema };
