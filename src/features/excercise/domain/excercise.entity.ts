@@ -39,6 +39,7 @@ export class ExcerciseEntity {
   @ManyToMany(() => MachineEntity, (machine) => machine.focus, {
     eager: true,
   })
+  @JoinTable()
   machine: MachineEntity[];
   @ManyToMany(
     () => BodyMuscleEntity,

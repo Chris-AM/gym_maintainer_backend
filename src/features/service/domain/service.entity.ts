@@ -3,6 +3,7 @@ import { CoachEntity } from 'src/features/users/base-user/worker-user/coach/doma
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -27,5 +28,6 @@ export class ServiceEntity {
   @ManyToOne(() => CoachEntity, (chief) => chief.servicesGiven)
   chief: CoachEntity;
   @ManyToMany(() => CustomerEntity, (customer) => customer.servicesEnrolled)
+  @JoinTable()
   studentsEnrolled: CustomerEntity[];
 }
