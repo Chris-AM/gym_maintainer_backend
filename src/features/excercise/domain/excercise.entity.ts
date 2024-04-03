@@ -1,11 +1,13 @@
 import { BodyMuscleEntity } from 'src/features/body-muscles/domain/body-muscle.entity';
 import { MachineEntity } from 'src/features/machine/domain/machine.entity';
+import { PlanEntity } from 'src/features/plan/domain/plan.entity';
 import { VideoEntity } from 'src/features/video/domain/video.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -32,6 +34,8 @@ export class ExcerciseEntity {
   secuencies: number;
   @OneToMany(() => VideoEntity, (video) => video.excercise)
   video: VideoEntity[];
+  @ManyToOne(() => PlanEntity, (plan) => plan.excercises)
+  plan: PlanEntity;
   @ManyToMany(() => MachineEntity, (machine) => machine.focus, {
     eager: true,
   })
