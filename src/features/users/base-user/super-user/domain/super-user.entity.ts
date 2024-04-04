@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Entity } from 'typeorm';
 import { BaseUserEntity } from '../../domain/base-user.entity';
 
 @Entity('super-user')
