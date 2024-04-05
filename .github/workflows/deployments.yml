@@ -9,7 +9,6 @@ on:
       - 'feature/*'
       - 'workflows/*'
       - 'hotfix/*'
-
   workflow_dispatch:
   push:
     branches:
@@ -27,6 +26,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm i
       - name: Run Lint
@@ -41,6 +45,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm i
       - name: Run Tests
@@ -55,6 +64,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm i
       - name: Build Project
