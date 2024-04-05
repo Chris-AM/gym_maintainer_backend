@@ -1,11 +1,22 @@
 version: '3'
 services:
   db:
-    image: mongo:5
+    image: postgres:14.3
     restart: always
     ports:
-      - 27017:27017
+      - '5432:5432'
     environment:
-        MONGODB_DATABASE: gym_mainainer_backend
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    container_name: gym_maintainer_db
     volumes:
-      - ./mongo:/data/db
+      - ./postgres:/var/lib/postgresql/data
+  # api:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+
