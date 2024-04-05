@@ -33,7 +33,6 @@ jobs:
         run: npm run lint
   test:
     needs: lint
-
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -63,13 +62,20 @@ jobs:
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: |
-            dist
-            package.json
+          name: build-artifact
+          path: dist
+          # this is an example of how to upload multiple files
+          # path: |
+          #   dist
+          #   package.json
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get Build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
       - name: Deploy
         run: echo "NOW SHOULD BE DEPLOYING..."
