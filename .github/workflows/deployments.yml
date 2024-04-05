@@ -63,7 +63,7 @@ jobs:
         run: npm run build
       - name: Publish Main Filename
         id: publish
-        run: find dist/main.js -type f -exedir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
+        run: find dist/main.js -type f -execdir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
