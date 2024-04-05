@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { LoggerService } from './logger/logger.service';
 import { BcryptService } from './bcrypt/bcrypt.service';
 import { DatabaseService } from './database/database.service';
@@ -14,7 +14,7 @@ import { getTypeOrmModuleOptions } from './database/database.helper';
       inject: [DatabaseService],
       useFactory: (configService: DatabaseService) =>
         getTypeOrmModuleOptions(configService),
-    })
+    }),
   ],
   providers: [LoggerService, BcryptService, DatabaseService, JwtService],
   exports: [LoggerService, BcryptService, DatabaseService, JwtService],

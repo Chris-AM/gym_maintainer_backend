@@ -5,7 +5,7 @@ import { UpdateCoachDto } from '../domain/dto/update-coach.dto';
 @Injectable()
 export class CoachService {
   create(createCoachDto: CreateCoachDto) {
-    return 'This action adds a new coach';
+    return `This action adds a new coach at ${createCoachDto}`;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class CoachService {
   }
 
   update(id: number, updateCoachDto: UpdateCoachDto) {
-    return `This action updates a #${id} coach`;
+    return `This action updates a #${id}, ${updateCoachDto} coach`;
   }
 
   remove(id: number) {

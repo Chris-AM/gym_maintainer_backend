@@ -5,7 +5,7 @@ import { UpdateExcerciseDto } from '../domain/dto/update-excercise.dto';
 @Injectable()
 export class ExcerciseService {
   create(createExcerciseDto: CreateExcerciseDto) {
-    return 'This action adds a new excercise';
+    return `This action adds a new excercise at ${createExcerciseDto}`;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class ExcerciseService {
   }
 
   update(id: number, updateExcerciseDto: UpdateExcerciseDto) {
-    return `This action updates a #${id} excercise`;
+    return `This action updates a #${id}, ${updateExcerciseDto} excercise`;
   }
 
   remove(id: number) {

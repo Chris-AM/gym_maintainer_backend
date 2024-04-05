@@ -5,7 +5,7 @@ import { UpdateBodyMuscleDto } from '../domain/dto/update-body-muscle.dto';
 @Injectable()
 export class BodyMusclesService {
   create(createBodyMuscleDto: CreateBodyMuscleDto) {
-    return 'This action adds a new bodyMuscle';
+    return `This action adds a new bodyMuscle at ${createBodyMuscleDto}`;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class BodyMusclesService {
   }
 
   update(id: number, updateBodyMuscleDto: UpdateBodyMuscleDto) {
-    return `This action updates a #${id} bodyMuscle`;
+    return `This action updates a #${id}, ${updateBodyMuscleDto} bodyMuscle`;
   }
 
   remove(id: number) {

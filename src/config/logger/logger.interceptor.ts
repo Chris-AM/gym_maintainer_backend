@@ -22,12 +22,14 @@ export class LoggerInterceptor implements NestInterceptor {
       `Petición Recibida:`,
       `A => ${request.url}, Método => ${request.method}, IP => ${ip}`,
     );
-    return next.handle().pipe(tap(() => {
-      this.service.log(
-        `Petición Finalizada:`,
-        `Tiempo de ejecución => ${Date.now() - now}ms`,
-      );
-    }));
+    return next.handle().pipe(
+      tap(() => {
+        this.service.log(
+          `Petición Finalizada:`,
+          `Tiempo de ejecución => ${Date.now() - now}ms`,
+        );
+      }),
+    );
   }
 
   private getIp(request: any): string {

@@ -5,7 +5,7 @@ import { UpdatePlanDto } from '../domain/dto/update-plan.dto';
 @Injectable()
 export class PlanService {
   create(createPlanDto: CreatePlanDto) {
-    return 'This action adds a new plan';
+    return `This action adds a new plan at ${createPlanDto}`;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class PlanService {
   }
 
   update(id: number, updatePlanDto: UpdatePlanDto) {
-    return `This action updates a #${id} plan`;
+    return `This action updates a #${id}, ${updatePlanDto} plan`;
   }
 
   remove(id: number) {

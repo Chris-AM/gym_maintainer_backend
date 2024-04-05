@@ -1,5 +1,4 @@
 import { ConfigService } from '@nestjs/config';
-import { DatabaseService } from '../database/database.service';
 import { LoggerInterceptor } from './logger.interceptor';
 import { LoggerService } from './logger.service';
 
@@ -21,8 +20,8 @@ describe('LoggerInterceptor', () => {
         'x-forwarded-for': '',
       },
       connection: {
-        remoteAddress: ''
-      }
+        remoteAddress: '',
+      },
     };
     const context = {
       switchToHttp: () => ({
