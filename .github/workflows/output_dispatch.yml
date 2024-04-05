@@ -10,3 +10,5 @@ jobs:
         run: echo "${{toJson(env)}}"
       - name: Checking Actual Job
         run: echo "${{toJson(job)}}"
+      - name: Dummy Step
+        run: echo "This is a dummy step"
