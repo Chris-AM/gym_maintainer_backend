@@ -1,7 +1,8 @@
 name: Deploy Project
-on: 
-  pull_request: 
-    types: opened
+on:
+  pull_request:
+    types:
+      - opened
     # branches:
     #   - develop
 jobs:
