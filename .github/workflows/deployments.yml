@@ -1,9 +1,10 @@
 name: Deploy Project
-on: 
-  pull_request: 
-    types: opened
-    branches:
-      - develop
+on:
+  pull_request:
+    types:
+      - opened
+    # branches:
+    #   - develop
 jobs:
   lint:
     runs-on: ubuntu-latest
