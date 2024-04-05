@@ -8,6 +8,7 @@ import { MachineModule } from './features/machine/machine.module';
 import { VideoModule } from './features/video/video.module';
 import { PlanModule } from './features/plan/plan.module';
 import { ServiceModule } from './features/service/service.module';
+
 import { BaseUserModule } from './features/users/base-user/base-user.module';
 
 @Module({
