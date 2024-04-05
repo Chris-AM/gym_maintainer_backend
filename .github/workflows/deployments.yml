@@ -2,9 +2,20 @@ name: Deploy Project
 on:
   pull_request:
     types:
-      - opened
-    # branches:
-    #   - develop
+      - closed
+    branches:
+      - develop
+    # branches-ignore:
+    #   - 'feature/*'
+    #   - 'workflow/*'
+    #   - 'hotfix/*'
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'README.md'
+      - './.github/**'
 jobs:
   lint:
     runs-on: ubuntu-latest
