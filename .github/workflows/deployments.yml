@@ -5,10 +5,10 @@ on:
       - closed
     branches:
       - develop
-    branches-ignore:
-      - 'feature/*'
-      - 'workflow/*'
-      - 'hotfix/*'
+    # branches-ignore:
+    #   - 'feature/*'
+    #   - 'workflow/*'
+    #   - 'hotfix/*'
   workflow_dispatch:
   push:
     branches:
