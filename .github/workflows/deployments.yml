@@ -9,7 +9,6 @@ on:
       - 'feature/*'
       - 'workflows/*'
       - 'hotfix/*'
-
   workflow_dispatch:
   push:
     branches:
@@ -27,6 +26,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm i
       - name: Run Lint
@@ -41,15 +45,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Run Tests
         run: npm run test
   build:
     needs: test
     runs-on: ubuntu-latest
-    outputs:
-      main-file: ${{ steps.publish.outputs.main-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -57,13 +64,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Build Project
         run: npm run build
-      - name: Publish Main Filename
-        id: publish
-        run: find dist/main.js -type f -execdir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
@@ -73,6 +82,7 @@ jobs:
           # path: |
           #   dist
           #   package.json
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -82,7 +92,5 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Output Main File
-        run: echo ${{ needs.build.outputs.main-file }}
       - name: Deploy
         run: echo "NOW SHOULD BE DEPLOYING..."
