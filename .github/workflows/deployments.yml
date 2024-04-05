@@ -51,7 +51,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Run Tests
         run: npm run test
   build:
@@ -70,7 +70,7 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Build Project
         run: npm run build
       - name: Archive Build (Upload Artifact)
