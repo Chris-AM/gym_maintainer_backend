@@ -5,7 +5,7 @@ import { UpdateAdminDto } from '../domain/dto/update-admin.dto';
 @Injectable()
 export class AdminService {
   create(createAdminDto: CreateAdminDto) {
-    return 'This action adds a new admin';
+    return `This action adds a new admin at ${createAdminDto}`;
   }
 
   findAll() {
@@ -17,7 +17,7 @@ export class AdminService {
   }
 
   update(id: number, updateAdminDto: UpdateAdminDto) {
-    return `This action updates a #${id} admin`;
+    return `This action updates a #${id}, ${updateAdminDto} admin`;
   }
 
   remove(id: number) {

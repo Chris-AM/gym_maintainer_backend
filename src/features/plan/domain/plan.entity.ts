@@ -3,7 +3,6 @@ import { CustomerEntity } from 'src/features/users/base-user/customer/domain/cus
 import {
   Column,
   Entity,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
