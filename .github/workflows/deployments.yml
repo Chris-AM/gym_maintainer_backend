@@ -9,6 +9,7 @@ on:
       - 'feature/*'
       - 'workflows/*'
       - 'hotfix/*'
+
   workflow_dispatch:
   push:
     branches:
