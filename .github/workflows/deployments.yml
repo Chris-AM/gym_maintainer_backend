@@ -2,9 +2,21 @@ name: Deploy Project
 on:
   pull_request:
     types:
-      - opened
+      - closed
     # branches:
     #   - develop
+    branches-ignore:
+      - 'feature/*'
+      - 'workflows/*'
+      - 'hotfix/*'
+
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'README.md'
+      - './.github/**'
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -21,7 +33,6 @@ jobs:
         run: npm run lint
   test:
     needs: lint
-
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -37,6 +48,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      main-file: ${{ steps.publish.outputs.main-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -48,9 +61,28 @@ jobs:
         run: npm i
       - name: Build Project
         run: npm run build
+      - name: Publish Main Filename
+        id: publish
+        run: find dist/main.js -type f -exedir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
+      - name: Archive Build (Upload Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
+          # this is an example of how to upload multiple files
+          # path: |
+          #   dist
+          #   package.json
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get Build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
+      - name: Output Main File
+        run: echo ${{ needs.build.outputs.main-file }}
       - name: Deploy
         run: echo "NOW SHOULD BE DEPLOYING..."
