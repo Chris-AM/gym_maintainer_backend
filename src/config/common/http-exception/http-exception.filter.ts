@@ -5,7 +5,7 @@ import {
   HttpException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { LoggerService } from 'src/config/logger/logger.service';
+import { LoggerService } from '../../logger/logger.service';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {

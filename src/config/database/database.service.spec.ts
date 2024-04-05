@@ -1,18 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { ConfigService } from '@nestjs/config';
+import { LoggerService } from '../logger/logger.service';
 import { DatabaseService } from './database.service';
 
 describe('DatabaseService', () => {
-  let service: DatabaseService;
+  let databaseService: DatabaseService;
+  let configService: ConfigService;
+  let loggerService: LoggerService;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [DatabaseService],
-    }).compile();
-
-    service = module.get<DatabaseService>(DatabaseService);
+  beforeEach(() => {
+    configService = new ConfigService();
+    loggerService = new LoggerService(configService);
+    databaseService = new DatabaseService(configService, loggerService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  it('should return encoded database type', () => {
+    jest.spyOn(configService, 'get').mockReturnValue('mysql');
+    const type = databaseService.getDatabaseType();
+    expect(type).toBe('mysql');
+  });
+
+  it('should log error when database type is not found', () => {
+    jest.spyOn(configService, 'get').mockReturnValue(null);
+    const spy = jest.spyOn(loggerService, 'error');
+    databaseService.getDatabaseType();
+    expect(spy).toHaveBeenCalled();
   });
 });
