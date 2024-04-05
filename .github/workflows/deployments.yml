@@ -48,6 +48,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      main-file: ${{ steps.publish.outputs.main-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -59,6 +61,9 @@ jobs:
         run: npm i
       - name: Build Project
         run: npm run build
+      - name: Publish Main Filename
+        id: publish
+        run: find dist/main.js -type f -exedir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
@@ -68,7 +73,6 @@ jobs:
           # path: |
           #   dist
           #   package.json
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -78,5 +82,7 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Output Main File
+        run: echo ${{ needs.build.outputs.main-file }}
       - name: Deploy
         run: echo "NOW SHOULD BE DEPLOYING..."
