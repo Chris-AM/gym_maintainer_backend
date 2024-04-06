@@ -19,6 +19,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    outputs:
+      package-lock: ${{ steps.package-lock_publication.outputs.package-lock }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -26,13 +28,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Cache Dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm i
+      - name: Archive Package Lock (Upload Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-lock
+          path: package-lock.json
+      - name: Publish Package Lock
+        id: package-lock_publication
+        run: find package-lock.json -type f -execdir echo 'package-lock={}' >> $GITHUB_OUTPUT ';'
       - name: Run Lint
         run: npm run lint
   test:
@@ -45,18 +50,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Cache Dependencies
-        uses: actions/cache@v4
+      - name: Get Package Lock
+        uses: actions/download-artifact@v4
         with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          name: package-lock
+          path: package-lock.json
+      - name: Output Package Lock
+        run: echo ${{ needs.lint.outputs.package-lock }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Run Tests
         run: npm run test
   build:
-    needs: test
+    needs: [test, lint]
     runs-on: ubuntu-latest
+    outputs:
+      main-file: ${{ steps.main-file_publication.outputs.main-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -64,15 +73,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Cache Dependencies
-        uses: actions/cache@v4
+      - name: Get Package Lock
+        uses: actions/download-artifact@v4
         with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          name: package-lock
+          path: package-lock.json
+      - name: Output Package Lock
+        run: echo ${{ needs.lint.outputs.package-lock }}
       - name: Install Dependencies
-        run: npm i
+        run: npm ci
       - name: Build Project
         run: npm run build
+      - name: Publish Main Filename
+        id: main-file_publication
+        run: find dist/main.js -type f -exedir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
@@ -82,7 +96,6 @@ jobs:
           # path: |
           #   dist
           #   package.json
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -92,5 +105,7 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Output Main File
+        run: echo ${{ needs.build.outputs.main-file }}
       - name: Deploy
         run: echo "NOW SHOULD BE DEPLOYING..."
