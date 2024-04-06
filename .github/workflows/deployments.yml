@@ -60,7 +60,12 @@ jobs:
       - name: Output Package Lock
         run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          if [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
       - name: Run Tests
         run: npm run test
   build:
@@ -83,7 +88,12 @@ jobs:
       - name: Output Package Lock
         run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          if [ -e package-lock.json ]; then
+          npm ci
+          else
+          npm i
+          fi
       - name: Build Project
         run: npm run build
       - name: Publish Main Filename
