@@ -31,15 +31,9 @@ jobs:
         with:
           node-version: 20.10
       - name: Install Dependencies
-        run: npm i
-      # - name: Archive Package Lock (Upload Artifact)
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: package-lock
-      #     path: package-lock.json
-      # - name: Publish Package Lock
-      #   id: package-lock_publication
-      #   run: find package-lock.json -type f -execdir echo 'package-lock={}' >> $GITHUB_OUTPUT ';'
+        run: |
+          npm i --package-lock-only
+          npm ci
       - name: Run Lint
         run: npm run lint
   test:
@@ -52,13 +46,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      # - name: Get Package Lock
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: package-lock
-      #     path: package-lock.json
-      # - name: Output Package Lock
-      #   run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -77,14 +64,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-          #! THINKING TO DELETE IT
-      # - name: Get Package Lock
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: package-lock
-      #     path: package-lock.json
-      # - name: Output Package Lock
-      #   run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -93,7 +72,7 @@ jobs:
         run: npm run build
       - name: Publish Main Filename
         id: main-file_publication
-        run: find dist/main.js -type f -exedir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
+        run: find dist/main.js -type f -execdir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
