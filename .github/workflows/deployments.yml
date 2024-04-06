@@ -21,8 +21,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    outputs:
-      package-lock: ${{ steps.package-lock_publication.outputs.package-lock }}
+    # outputs:
+    #   package-lock: ${{ steps.package-lock_publication.outputs.package-lock }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -32,14 +32,14 @@ jobs:
           node-version: 20.10
       - name: Install Dependencies
         run: npm i
-      - name: Archive Package Lock (Upload Artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: package-lock
-          path: package-lock.json
-      - name: Publish Package Lock
-        id: package-lock_publication
-        run: find package-lock.json -type f -execdir echo 'package-lock={}' >> $GITHUB_OUTPUT ';'
+      # - name: Archive Package Lock (Upload Artifact)
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: package-lock
+      #     path: package-lock.json
+      # - name: Publish Package Lock
+      #   id: package-lock_publication
+      #   run: find package-lock.json -type f -execdir echo 'package-lock={}' >> $GITHUB_OUTPUT ';'
       - name: Run Lint
         run: npm run lint
   test:
@@ -52,20 +52,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Get Package Lock
-        uses: actions/download-artifact@v4
-        with:
-          name: package-lock
-          path: package-lock.json
-      - name: Output Package Lock
-        run: echo ${{ needs.lint.outputs.package-lock }} && ls
+      # - name: Get Package Lock
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: package-lock
+      #     path: package-lock.json
+      # - name: Output Package Lock
+      #   run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
         run: |
-          if [ -e package-lock.json ]; then
+          npm i --package-lock-only
           npm ci
-          else
-          npm i
-          fi
       - name: Run Tests
         run: npm run test
   build:
@@ -80,20 +77,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Get Package Lock
-        uses: actions/download-artifact@v4
-        with:
-          name: package-lock
-          path: package-lock.json
-      - name: Output Package Lock
-        run: echo ${{ needs.lint.outputs.package-lock }} && ls
+          #! THINKING TO DELETE IT
+      # - name: Get Package Lock
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: package-lock
+      #     path: package-lock.json
+      # - name: Output Package Lock
+      #   run: echo ${{ needs.lint.outputs.package-lock }} && ls
       - name: Install Dependencies
         run: |
-          if [ -e package-lock.json ]; then
+          npm i --package-lock-only
           npm ci
-          else
-          npm i
-          fi
       - name: Build Project
         run: npm run build
       - name: Publish Main Filename
