@@ -43,13 +43,6 @@ jobs:
     outputs:
       cache_deps: ${{ steps.cache_deps.outputs.cache-hit }}
     steps:
-      - name: Get code
-        uses: actions/checkout@v4
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.10
-          cache: 'npm'
       - name: Get Package Lock
         uses: actions/download-artifact@v4
         with:
@@ -57,6 +50,13 @@ jobs:
           path: .
       - name: Output Root Directory
         run: ls -la
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10
+          cache: 'npm'
       - name: Install Clean Dependencies
         run: npm ci
       # - name: Install Dependencies
