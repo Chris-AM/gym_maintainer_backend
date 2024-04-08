@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-          cache: '~/.npm'
+          cache: 'npm'
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -62,7 +62,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-          cache: '~/.npm'
+          cache: 'npm'
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
@@ -88,7 +88,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-          cache: '~/.npm'
+          cache: 'npm'
       - name: Cache Dependencies
         uses: actions/cache@v4
         with:
