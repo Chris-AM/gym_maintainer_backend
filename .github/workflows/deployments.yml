@@ -39,6 +39,7 @@ jobs:
           name: package-lock
           path: package-lock.json
   lint:
+    needs: prepare
     runs-on: ubuntu-latest
     outputs:
       cache_deps: ${{ steps.cache_deps.outputs.cache-hit }}
