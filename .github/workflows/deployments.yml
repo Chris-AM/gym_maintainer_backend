@@ -19,8 +19,10 @@ on:
   #     - 'README.md'
   #     - './.github/**'
 jobs:
-  prepare:
+  lint:
     runs-on: ubuntu-latest
+    outputs:
+      cache_deps: ${{ steps.cache_deps.outputs.cache-hit }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -31,36 +33,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
-      - name: Archive Package Lock (Upload Artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: package-lock
-          path: package-lock.json
-  lint:
-    needs: prepare
-    runs-on: ubuntu-latest
-    outputs:
-      cache_deps: ${{ steps.cache_deps.outputs.cache-hit }}
-    steps:
-      - name: Get Package Lock
-        uses: actions/download-artifact@v4
-        with:
-          name: package-lock
-          path: .
-      - name: Output Root Directory
-        run: ls -la
-      - name: Get code
-        uses: actions/checkout@v4
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.10
-      - name: Install Clean Dependencies
-        run: npm ci
-      # - name: Install Dependencies
-      #   run: |
-      #     npm i --package-lock-only
-      #     npm ci
+          npm ci
       - name: Cache Dependencies
         id: cache_deps
         uses: actions/cache@v4
@@ -69,13 +42,6 @@ jobs:
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
           fail-on-cache-miss: true
           save-always: true
-      - name: Check Cache Status
-        run: |
-          if [ -z "${{ steps.cache_deps.outputs.cache-hit }}" ]; then
-            echo "Cache Missed"
-          else
-            echo "Cache Hit"
-          fi
       - name: Run Lint
         run: npm run lint
   test:
