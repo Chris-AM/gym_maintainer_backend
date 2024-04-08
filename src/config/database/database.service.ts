@@ -11,7 +11,7 @@ export class DatabaseService implements IDatabaseInterface {
   ) {}
 
   getDatabaseType(): string {
-    const type: string = this.configService.get<string>('DB_TYPE');
+    const type: string = this.configService.get<string>('env.DB_TYPE');
     const petitionResponse = this.varValidation(type)
       ? (this.logger.error('[DB SERVICE]', 'Database type not found'), null)
       : (this.logger.debug(`Connected With Database Type => ${type}`), type);
@@ -20,7 +20,7 @@ export class DatabaseService implements IDatabaseInterface {
   }
 
   getDatabaseHost(): string {
-    const host: string = this.configService.get<string>('DB_HOST');
+    const host: string = this.configService.get<string>('env.DB_HOST');
     const petitionResponse = this.varValidation(host)
       ? (this.logger.error('[DB SERVICE]', 'Database host not found'), null)
       : (this.logger.debug(`Connected At Host => ${host}`), host);
@@ -28,7 +28,7 @@ export class DatabaseService implements IDatabaseInterface {
     return encoded;
   }
   getDatabasePort(): string {
-    const port = this.configService.get<number>('DB_PORT');
+    const port = this.configService.get<number>('env.DB_PORT');
     const petitionResponse = this.varValidation(port)
       ? (this.logger.error('[DB SERVICE]', 'Database port not found'), null)
       : (this.logger.debug(`Connected At Port => ${port}`), port);
@@ -36,7 +36,7 @@ export class DatabaseService implements IDatabaseInterface {
     return encoded;
   }
   getDatabaseUsername(): string {
-    const username = this.configService.get<string>('DB_USERNAME');
+    const username = this.configService.get<string>('env.DB_USERNAME');
     const petitionResponse = this.varValidation(username)
       ? (this.logger.error('[DB SERVICE]', 'Database username not found'), null)
       : (this.logger.debug(`Connected With Username => ${username}`), username);
@@ -44,7 +44,7 @@ export class DatabaseService implements IDatabaseInterface {
     return encoded;
   }
   getDatabasePassword(): string {
-    const password = this.configService.get<string>('DB_PASSWORD');
+    const password = this.configService.get<string>('env.DB_PASSWORD');
     const petitionResponse = this.varValidation(password)
       ? (this.logger.error('[DB SERVICE]', 'Database password not found'), null)
       : (this.logger.debug(`Connected With Password => ${password}`), password);
@@ -52,7 +52,7 @@ export class DatabaseService implements IDatabaseInterface {
     return encoded;
   }
   getDatabaseName(): string {
-    const database = this.configService.get<string>('DB_NAME');
+    const database = this.configService.get<string>('env.DB_NAME');
     const petitionResponse = this.varValidation(database)
       ? (this.logger.error('[DB SERVICE]', 'Database name not found'), null)
       : (this.logger.debug(`Connected With Database => ${database}`), database);

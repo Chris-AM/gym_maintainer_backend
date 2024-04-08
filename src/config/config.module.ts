@@ -6,9 +6,14 @@ import { DatabaseService } from './database/database.service';
 import { JwtService } from './jwt/jwt.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getTypeOrmModuleOptions } from './database/database.helper';
+import configuration from './database/configuration';
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      load: [configuration],
+      isGlobal: true,
+    }),
     TypeOrmModule.forRootAsync({
       imports: [EnvironmentConfigModule],
       inject: [DatabaseService],

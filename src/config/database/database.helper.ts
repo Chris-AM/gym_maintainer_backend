@@ -1,5 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
 import { DatabaseService } from './database.service';
+
 
 export const getTypeOrmModuleOptions = (
   config: DatabaseService,
