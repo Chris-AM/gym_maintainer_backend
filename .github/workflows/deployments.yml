@@ -21,8 +21,6 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    # outputs:
-    #   package-lock: ${{ steps.package-lock_publication.outputs.package-lock }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -30,6 +28,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cach Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -46,6 +49,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cach Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -64,6 +72,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
+      - name: Cach Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
@@ -72,7 +85,7 @@ jobs:
         run: npm run build
       - name: Publish Main Filename
         id: main-file_publication
-        run: find dist/main.js -type f -execdir echo 'main-file={}' >> $GITHUB_OUTPUT ';'
+        run: find dist/main.js -type f -execdir echo '' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
