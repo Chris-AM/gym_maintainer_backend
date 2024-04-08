@@ -21,6 +21,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    outputs:
+      cache_deps: ${{ steps.cache_deps.outputs.cache-hit }}
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -63,7 +65,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          restore-keys: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ needs.lint.outputs.cache_deps.outputs.cache-key }}
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
           fail-on-cache-miss: true
       - name: Install Dependencies
@@ -89,7 +91,7 @@ jobs:
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ needs.lint.outputs.cache_deps.outputs.cache-key }}
           fail-on-cache-miss: true
       - name: Install Dependencies
         run: |
