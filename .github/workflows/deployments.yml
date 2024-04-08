@@ -38,6 +38,7 @@ jobs:
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Check Cache Status
         run: |
           if [ -z "${{ steps.cache_deps.outputs.cache-hit }}" ]; then
@@ -62,6 +63,7 @@ jobs:
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          fail-on-cache-miss: true
       - name: Install Dependencies
         run: |
           npm i --package-lock-only
