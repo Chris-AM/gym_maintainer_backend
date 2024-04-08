@@ -36,14 +36,14 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.yarn
-          key: node-modules${{ hashFiles('**/yarn.lock') }}
+          key: node-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             node-modules
-            node-modules${{ hashFiles('**/yarn.lock') }}
+            node-modules-${{ hashFiles('**/yarn.lock') }}
           # fail-on-cache-miss: true
           save-always: true
       - name: Install Dependencies
-        run: yarn add --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Run Lint
         run: yarn lint
   test:
@@ -62,10 +62,10 @@ jobs:
         with:
           path: ~/.yarn
           restore-keys: ${{ needs.lint.outputs.cache_deps.outputs.cache-key }}
-          key: node-modules${{ hashFiles('**/yarn.lock') }}
+          key: node-modules-${{ hashFiles('**/yarn.lock') }}
           fail-on-cache-miss: true
       - name: Install Dependencies
-        run: yarn add --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Run Tests
         run: yarn run test
   build:
@@ -84,11 +84,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.yarn
-          key: node-modules${{ hashFiles('**/yarn.lock') }}
+          key: node-modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ needs.lint.outputs.cache_deps.outputs.cache-key }}
           fail-on-cache-miss: true
       - name: Install Dependencies
-        run: yarn add --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Build Project
         run: yarn run build
       - name: Publish Main Filename
