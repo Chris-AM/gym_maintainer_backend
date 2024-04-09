@@ -18,7 +18,6 @@ export class DatabaseService implements IDatabaseInterface {
     const encoded = encodeURIComponent(petitionResponse);
     return encoded;
   }
-
   getDatabaseHost(): string {
     const host: string = this.configService.get<string>('env.DB_HOST');
     const petitionResponse = this.varValidation(host)
