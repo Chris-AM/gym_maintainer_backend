@@ -27,6 +27,7 @@ env:
   DB_NAME: ${{secrets.DEV_DB_NAME}}
 jobs:
   check-connection:
+    environment: development
     runs-on: ubuntu-latest
     steps:
       - name: Check Connection
@@ -63,6 +64,7 @@ jobs:
       - name: Run Lint
         run: yarn lint
   test:
+    environment: development
     needs: lint
     runs-on: ubuntu-latest
     steps:
@@ -82,6 +84,7 @@ jobs:
       - name: Run Tests
         run: yarn run test
   build:
+    environment: development
     needs: [test, lint]
     runs-on: ubuntu-latest
     outputs:
@@ -115,6 +118,7 @@ jobs:
           #   dist
           #   package.json
   deploy:
+    environment: development
     needs: build
     runs-on: ubuntu-latest
     steps:
