@@ -32,6 +32,19 @@ jobs:
     steps:
       - name: Check Connection
         run: echo "Checking connection to ${{env.DB_TYPE}}://${{env.DB_USERNAME}}:${{env.DB_PASSWORD}}@${{env.DB_HOST}}:${{env.DB_PORT}}/${{env.DB_NAME}}"
+  compose:
+    environment: development
+    needs: check-connection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Compose Up
+        uses: hoverkraft-tech/compose-action@v1.5.1
+        with:
+          compose-file: './docker-compose.yml'
+      - name: Compose Status
+        run: docker ps -a
   lint:
     environment: development
     needs: check-connection
