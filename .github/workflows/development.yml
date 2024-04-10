@@ -19,6 +19,7 @@ on:
   #     - 'README.md'
   #     - './.github/**'
 env:
+  CACHE_KEY: node-deps
   DB_TYPE: ${{secrets.DEV_DB_TYPE}}
   DB_HOST: ${{secrets.DEV_DB_HOST}}
   DB_PORT: ${{secrets.DEV_DB_PORT}}
@@ -32,19 +33,6 @@ jobs:
     steps:
       - name: Check Connection
         run: echo "Checking connection to ${{env.DB_TYPE}}://${{env.DB_USERNAME}}:${{env.DB_PASSWORD}}@${{env.DB_HOST}}:${{env.DB_PORT}}/${{env.DB_NAME}}"
-  compose:
-    environment: development
-    needs: check-connection
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v4
-      - name: Compose Up
-        uses: hoverkraft-tech/compose-action@v1.5.1
-        with:
-          compose-file: './docker-compose.yaml'
-      - name: Compose Status
-        run: docker ps -a
   lint:
     environment: development
     needs: check-connection
@@ -108,6 +96,11 @@ jobs:
     environment: development
     needs: [test, lint]
     runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:14.3
+        ports:
+          - 5432:5432
     outputs:
       main-file: ${{ steps.main-file_publication.outputs.main-file }}
     steps:
@@ -140,10 +133,11 @@ jobs:
           #   dist
           #   package.json
   deploy:
-    needs: build
+    needs: [build, lint]
     uses: ./.github/workflows/deploy-job.yml
     with:
       artifact_name: build-artifact
+      node_cache: ${{ needs.lint.outputs.yarn_cache_dir }}
   print-deploy-result:
     needs: deploy
     runs-on: ubuntu-latest
