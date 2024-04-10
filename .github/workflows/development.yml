@@ -138,6 +138,7 @@ jobs:
     with:
       artifact_name: build-artifact
       yarn_cache_dir: ${{ needs.lint.outputs.yarn_cache_dir }}
+    secrets: inherit
   print-deploy-result:
     needs: deploy
     runs-on: ubuntu-latest
