@@ -114,9 +114,9 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build Project
         run: yarn run build
-      - name: Publish Main Filename
+      - name: Publish Distribution
         id: main-file_publication
-        run: find dist/main.js -type f -execdir echo '' >> $GITHUB_OUTPUT ';'
+        run: find dist -type f -execdir echo '' >> $GITHUB_OUTPUT ';'
       - name: Archive Build (Upload Artifact)
         uses: actions/upload-artifact@v4
         with:
@@ -129,3 +129,5 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/deploy-job.yml
+    with:
+      artifact_name: build-artifact

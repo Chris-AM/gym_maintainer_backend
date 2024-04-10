@@ -1,11 +1,23 @@
 name: Deploy Job Step
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      artifact_name:
+        description: Artifact folder name
+        required: true
+        default: dist
+        type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Output GitHub Context
-        run: echo "${{ toJson(github) }}"
+      - name: Get Main File Name
+        id: get_main_file_name
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{inputs.artifact_name}}
+      - name: List Files
+        run: ls -la
       - name: Checking Environment
         run: echo "${{toJson(env)}}"
       - name: Checking Actual Job
