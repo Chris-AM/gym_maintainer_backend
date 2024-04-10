@@ -1,7 +1,7 @@
-name: Output Info Dispatch
-on: workflow_dispatch
+name: Deploy Job Step
+on: workflow_call
 jobs:
-  info:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Output GitHub Context

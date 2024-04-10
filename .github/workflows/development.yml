@@ -127,16 +127,5 @@ jobs:
           #   dist
           #   package.json
   deploy:
-    environment: development
     needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Build
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact
-          path: dist
-      - name: Output Main File
-        run: echo ${{ needs.build.outputs.main-file }}
-      - name: Deploy
-        run: echo "NOW SHOULD BE DEPLOYING..."
+    uses: ./.github/workflows/deploy-job.yml
