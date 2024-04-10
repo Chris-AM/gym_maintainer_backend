@@ -131,3 +131,9 @@ jobs:
     uses: ./.github/workflows/deploy-job.yml
     with:
       artifact_name: build-artifact
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Deploy Result
+        run: echo '${{needs.deploy.outputs.result}}'

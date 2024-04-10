@@ -7,8 +7,14 @@ on:
         required: true
         default: dist
         type: string
+    outputs:
+      result:
+        description: The result of the job
+        value: ${{jobs.deploy.outputs.dist-result}}
 jobs:
   deploy:
+    outputs:
+      dist-result: ${{steps.set_result_output.outputs.step-result}}
     runs-on: ubuntu-latest
     steps:
       - name: Get Main File Name
@@ -18,8 +24,9 @@ jobs:
           name: ${{inputs.artifact_name}}
       - name: List Files
         run: ls -la
-      - name: Checking Environment
-        run: echo "${{toJson(env)}}"
+      - name: Set Result Output
+        id: set_result_output
+        run: echo "step-result=success" >> $GITHUB_OUTPUT
       - name: Checking Actual Job
         run: echo "${{toJson(job)}}"
       - name: Dummy Step
