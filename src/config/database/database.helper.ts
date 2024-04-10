@@ -4,7 +4,7 @@ import * as yaml from 'js-yaml';
 import { join } from 'path';
 import { DatabaseService } from './database.service';
 
-const YAML_CONFIG_FILENAME = '../../../.github/workflows/development.yml';
+const YAML_CONFIG_FILENAME = '../../.github/workflows/development.yml';
 
 export const getTypeOrmModuleOptions = (
   config: DatabaseService,
