@@ -137,7 +137,7 @@ jobs:
     uses: ./.github/workflows/deploy-job.yml
     with:
       artifact_name: build-artifact
-      node_cache: ${{ needs.lint.outputs.yarn_cache_dir }}
+      yarn_cache_dir: ${{ needs.lint.outputs.yarn_cache_dir }}
   print-deploy-result:
     needs: deploy
     runs-on: ubuntu-latest
