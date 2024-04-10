@@ -12,11 +12,4 @@ services:
     container_name: gym_maintainer_db
     volumes:
       - ./postgres:/var/lib/postgresql/data
-  # api:
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
 
