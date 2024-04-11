@@ -133,15 +133,43 @@ jobs:
           #   dist
           #   package.json
   deploy:
+    environment: development
     needs: [build, lint]
-    uses: ./.github/workflows/deploy-job.yml
-    with:
-      artifact_name: build-artifact
-      yarn_cache_dir: ${{ needs.lint.outputs.yarn_cache_dir }}
-    secrets: inherit
-  print-deploy-result:
-    needs: deploy
+    # uses: ./.github/workflows/deploy-job.yml
+    # with:
+    #   artifact_name: build-artifact
+    #   yarn_cache_dir: ${{ needs.lint.outputs.yarn_cache_dir }}
+    # secrets: inherit
     runs-on: ubuntu-latest
     steps:
-      - name: Get Deploy Result
-        run: echo '${{needs.deploy.outputs.result}}'
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10.0
+      - name: Cache Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ needs.lint.outputs.yarn_cache_dir }}
+          key: node-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Download Dist Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: dist
+      - name: Install Dependencies
+        if: needs.lint.outputs.yarn_cache_dir.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+      - name: List Files
+        run: ls -la
+      - name: Output Connection Data
+        run: echo "DB NAME => ${{env.DB_NAME}} DB HOST => ${{env.DB_HOST}} DB PORT => ${{env.DB_PORT}} DB USERNAME => ${{env.DB_USERNAME}} DB PASSWORD => ${{env.DB_PASSWORD}}"
+      - name: Run Dist
+        run: node main.js
+  # print-deploy-result:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get Deploy Result
+  #       run: echo '${{needs.deploy.outputs.result}}'
