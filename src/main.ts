@@ -7,7 +7,7 @@ import { LoggerInterceptor } from './config/logger/logger.interceptor';
 import { ResponseInterceptor } from './config/common/response/response.interceptor';
 import { HttpExceptionFilter } from './config/common/http-exception/http-exception.filter';
 
-async function gymGestor() {
+async function gymMaintainer() {
   const app = await NestFactory.create(AppModule);
 
   const config: ConfigService = new ConfigService();
@@ -37,4 +37,4 @@ async function gymGestor() {
   await app.listen(port);
   logger.log('🚀 APP', `Server running on port ${port}`);
 }
-gymGestor();
+gymMaintainer();
