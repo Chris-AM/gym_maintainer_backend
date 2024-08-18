@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EnvironmentConfigModule } from './config/config.module';
-import { ExcerciseModule } from './features/excercise/excercise.module';
+import { ExerciseModule } from './features/exercise/exercise.module';
 import { BodyMusclesModule } from './features/body-muscles/body-muscles.module';
 import { MachineModule } from './features/machine/machine.module';
 import { VideoModule } from './features/video/video.module';
@@ -14,7 +14,7 @@ import { BaseUserModule } from './features/users/base-user/base-user.module';
 @Module({
   imports: [
     EnvironmentConfigModule,
-    ExcerciseModule,
+    ExerciseModule,
     BodyMusclesModule,
     MachineModule,
     VideoModule,

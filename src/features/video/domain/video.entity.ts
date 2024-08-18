@@ -1,4 +1,4 @@
-import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import { ExerciseEntity } from 'src/features/exercise/domain/exercise';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('video')
@@ -11,8 +11,8 @@ export class VideoEntity {
   url: string;
   @Column('text')
   description: string;
-  @ManyToOne(() => ExcerciseEntity, (excercise) => excercise.video, {
+  @ManyToOne(() => ExerciseEntity, (exercise) => exercise.video, {
     eager: true,
   })
-  excercise: ExcerciseEntity;
+  exercise: ExerciseEntity;
 }

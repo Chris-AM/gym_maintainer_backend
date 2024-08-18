@@ -50,5 +50,5 @@ export class CreatePlanDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  excercises: string[];
+  exercises: string[];
 }

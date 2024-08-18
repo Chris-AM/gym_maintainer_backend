@@ -1,4 +1,4 @@
-import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import { ExerciseEntity } from 'src/features/exercise/domain/exercise';
 import {
   Column,
   Entity,
@@ -21,7 +21,7 @@ export class MachineEntity {
   description: string;
   @Column('text')
   warnings: string;
-  @ManyToMany(() => ExcerciseEntity, (excercise) => excercise.machine)
+  @ManyToMany(() => ExerciseEntity, (exercise) => exercise.machine)
   @JoinTable()
-  focus: ExcerciseEntity[];
+  focus: ExerciseEntity[];
 }

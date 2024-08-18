@@ -12,12 +12,12 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-export type ExcerciseDocument = ExcerciseEntity & Document;
+export type ExerciseDocument = ExerciseEntity & Document;
 
-@Entity('excercise')
-export class ExcerciseEntity {
+@Entity('exercise')
+export class ExerciseEntity {
   @PrimaryGeneratedColumn('uuid')
-  excerciseId: string;
+  exerciseId: string;
   @Column('text')
   name: string;
   @Column('text')
@@ -31,10 +31,10 @@ export class ExcerciseEntity {
   @Column('int')
   currentValue: number;
   @Column('int')
-  secuencies: number;
-  @OneToMany(() => VideoEntity, (video) => video.excercise)
+  sequencies: number;
+  @OneToMany(() => VideoEntity, (video) => video.exercise)
   video: VideoEntity[];
-  @ManyToOne(() => PlanEntity, (plan) => plan.excercises)
+  @ManyToOne(() => PlanEntity, (plan) => plan.exercises)
   plan: PlanEntity;
   @ManyToMany(() => MachineEntity, (machine) => machine.focus, {
     eager: true,
@@ -43,7 +43,7 @@ export class ExcerciseEntity {
   machine: MachineEntity[];
   @ManyToMany(
     () => BodyMuscleEntity,
-    (bodyMuscle) => bodyMuscle.bestExcercises,
+    (bodyMuscle) => bodyMuscle.bestExercises,
     {
       eager: true,
     },

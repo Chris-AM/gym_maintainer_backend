@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
-export class CreateExcerciseDto {
+export class CreateExerciseDto {
   @ApiProperty({
     required: true,
     type: String,
@@ -56,7 +56,7 @@ export class CreateExcerciseDto {
   })
   @IsNotEmpty()
   @IsNumber()
-  readonly secuencies: number;
+  readonly sequencies: number;
   @ApiProperty({
     required: true,
     type: Array,
@@ -66,7 +66,7 @@ export class CreateExcerciseDto {
   @ApiProperty({
     required: true,
     type: Array,
-    description: 'Maquinas que se pueden usar para el ejercicio (por sus ID)',
+    description: 'Máquinas que se pueden usar para el ejercicio (por sus ID)',
   })
   readonly machine: string[];
   @ApiProperty({

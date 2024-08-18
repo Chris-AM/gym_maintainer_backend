@@ -6,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import { ExerciseEntity } from 'src/features/exercise/domain/exercise';
 import { BodyMuscleIconEntity } from './body-muscle.icon';
 
 export type BodyMuscleDocument = BodyMuscleEntity & Document;
@@ -19,9 +19,9 @@ export class BodyMuscleEntity {
   name: string;
   @Column('text')
   description: string;
-  @ManyToMany(() => ExcerciseEntity, (excercise) => excercise.focus, {})
+  @ManyToMany(() => ExerciseEntity, (exercise) => exercise.focus, {})
   @JoinTable()
-  bestExcercises: ExcerciseEntity[];
+  bestExercises: ExerciseEntity[];
   @OneToOne(() => BodyMuscleIconEntity, (icon) => icon.bodyMuscle)
   icon: BodyMuscleIconEntity;
 }

@@ -1,4 +1,4 @@
-import { ExcerciseEntity } from 'src/features/excercise/domain/excercise.entity';
+import { ExerciseEntity } from 'src/features/exercise/domain/exercise';
 import { CustomerEntity } from 'src/features/users/base-user/customer/domain/customer.entity';
 import {
   Column,
@@ -23,8 +23,8 @@ export class PlanEntity {
   isActive: boolean;
   @Column('int')
   daysAWeek: number;
-  @OneToMany(() => ExcerciseEntity, (excercise) => excercise.plan)
-  excercises: ExcerciseEntity[];
+  @OneToMany(() => ExerciseEntity, (exercise) => exercise.plan)
+  exercises: ExerciseEntity[];
   @ManyToOne(() => CustomerEntity, (customers) => customers.plan)
   customers: CustomerEntity[];
 }

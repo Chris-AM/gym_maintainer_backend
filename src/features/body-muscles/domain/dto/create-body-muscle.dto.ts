@@ -32,5 +32,5 @@ export class CreateBodyMuscleDto {
   })
   @IsString({ each: true })
   @IsOptional()
-  readonly bestExcercises?: string[];
+  readonly bestExercises?: string[];
 }
